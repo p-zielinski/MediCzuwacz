@@ -114,3 +114,4 @@ visits.db.dir
 
 #local runs
 /appointments.json
+/node_modules/
