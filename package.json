@@ -1,16 +1,19 @@
 {
+  "name": "mediczuwacz",
   "version": "1.0.0",
+  "type": "commonjs",
   "scripts": {
-    "start": "ts-node ./start.ts"
+    "start": "ts-node start.ts"
   },
   "dependencies": {
     "cross-env": "7.0.3",
     "dotenv": "^16.4.5",
-    "nodemailer": "6.10.1",
-    "ts-node": "^10.9.1"
+    "nodemailer": "6.10.1"
   },
   "devDependencies": {
-    "@types/node": "^20.7.0",
-    "@types/nodemailer": "^6.4.15"
+    "@types/node": "^20.19.2",
+    "@types/nodemailer": "^6.4.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
