@@ -47,13 +47,16 @@ const checkAppointment = async ():Promise<string | undefined> => await new Promi
 });
 
 
+let counter = 0;
 (async ()=>{
     while(true){
         const appointments = await checkAppointment();
         if(appointments){
             await sendEmail(appointments).catch(console.error);
-            await sleep(1000 * 90)
+            await sleep(1000 * 60 * 10)
         }
+        counter++;
+        console.log(`Try number ${counter} finished`);
         await sleep(1000 * 90)
     }
 })()
