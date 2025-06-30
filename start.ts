@@ -39,6 +39,9 @@ const checkAppointment = async ():Promise<string | undefined> => await new Promi
         if (stderr) {
             console.log(stderr);
         }
+        if(stdout) {
+            console.log(stdout);
+        }
         return resolve(undefined);
     });
 });
@@ -51,7 +54,6 @@ const checkAppointment = async ():Promise<string | undefined> => await new Promi
             await sendEmail(appointments).catch(console.error);
             await sleep(1000 * 90)
         }
-        console.log('No appointments found');
         await sleep(1000 * 90)
     }
 })()
