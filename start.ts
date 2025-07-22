@@ -31,8 +31,8 @@ const sendEmail = async(text:string) =>  {
 
 const sleep = (ms:number) => new Promise(r => setTimeout(r, ms));
 
-const checkAppointment = async ():Promise<string | undefined> => await new Promise((resolve) => {
-    return exec(process.env.MEDIHUNTER_RUN_COMMAND!, (errorL:any, stdout:any, stderr:any) => {
+const checkAppointment = async (command:string):Promise<string | undefined> => await new Promise((resolve) => {
+    return exec(command, (errorL:any, stdout:any, stderr:any) => {
         if(stdout.includes('Date: ')){
             return resolve(stdout);
         }
@@ -46,17 +46,22 @@ const checkAppointment = async ():Promise<string | undefined> => await new Promi
     });
 });
 
+const commands:string[] = [process.env.MEDIHUNTER_RUN_COMMAND!, process.env.MEDIHUNTER_RUN_COMMAND_2!]
+
 
 let counter = 0;
 (async ()=>{
     while(true){
-        const appointments = await checkAppointment();
-        if(appointments){
-            await sendEmail(appointments).catch(console.error);
-            await sleep(1000 * 60 * 10)
+        for await (const command of commands){
+            const appointments = await checkAppointment(command);
+            if(appointments){
+                await sendEmail(appointments).catch(console.error);
+                await sleep(1000 * 60 * 2)
+            }
+            counter++;
+            console.log(`Try number ${counter} finished`);
+            await sleep(1000 * 15)
         }
-        counter++;
-        console.log(`Try number ${counter} finished`);
         await sleep(1000 * 90)
     }
 })()
